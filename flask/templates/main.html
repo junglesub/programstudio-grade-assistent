@@ -1,0 +1,35 @@
+{% extends "layout.html" %} {% block content %}
+<h1>HW1 ({{students|length}})</h1>
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">학번</th>
+      <th scope="col">이름</th>
+      <th scope="col">깃허브</th>
+      <th scope="col">파일보기</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in students %} {% set studentCode = student[0] + "_" +
+    student[1] %}
+    <tr>
+      <th scope="row">{{ student[0] }}</th>
+      <td>{{ student[1] }}</td>
+      <td>
+        {%if student[2]%}
+        <a href="{{ student[2] }}" target="_blank" rel="noopener noreferrer"
+          >링크</a
+        >
+        {%endif%}
+      </td>
+      <td>
+        {%if (studentCode in dirs) %}
+        <a href="student/{{studentCode}}">파일보기</a> {%else%}
+        <span class="text-danger">채점 불가능</span> {%endif%}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

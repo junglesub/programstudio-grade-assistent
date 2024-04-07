@@ -1,0 +1,91 @@
+{% extends "layout.html" %} {% block content %}
+<style>
+  .student_container,
+  .grader {
+    display: flex;
+  }
+
+  .student_container .s_left {
+    height: 90vh;
+    overflow-y: scroll;
+  }
+
+  .student_container > div {
+    margin: 8px;
+  }
+  .student_container .s_right {
+    flex-grow: 1;
+    /* width: 49%; */
+  }
+  .student_container .time {
+    font-size: 0.7em;
+  }
+  .student_container .code {
+    height: 40vh;
+    width: 100%;
+  }
+  .student_container .late {
+    color: red;
+    font-weight: bold;
+  }
+</style>
+
+<a href="/">HW1 ({{name}})</a>
+<a href="/student/{{next_student}}">{{next_student}}</a>
+
+<div class="student_container">
+  <div class="s_left">
+    {% for file in filesList %}
+    <div class="file">
+      <div>
+        <a href="?file={{file.filename}}&timestamp={{file.git_timestamp}}">
+          {{file.filename}}</a
+        >
+      </div>
+      <div class="time">{{file.git_time}}</div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="s_right">
+    <pre class="code"><code class="language-c">{{filecontent}}</code></pre>
+    {% for testcase in tc_filename %}
+    <a
+      class="button"
+      href="?file={{selfile}}&timestamp={{timestamp.timestamp()}}&tc={{testcase}}"
+      >{{testcase}}</a
+    >
+    {% endfor %}
+    <div class="grader">
+      <pre
+        class="answer"
+      ><code class="language-text">{{tc_output_st}}</code></pre>
+      <div class="gradegrade">
+        <div class="">
+          <input type="checkbox" id="ontime" />
+          <label for="ontime">기간</label>
+        </div>
+        <div class="">
+          <input type="checkbox" id="code" />
+          <label for="code">코드</label>
+        </div>
+        <div class="">
+          <input type="checkbox" id="requirement" />
+          <label for="requirement">조건</label>
+        </div>
+        <div class="">
+          <input type="checkbox" id="submit" />
+          <label for="submit">제출</label>
+        </div>
+        <div>
+          <div>제출일: {{timestamp.strftime('%Y-%m-%d %H:%m')}}</div>
+          <div>마감일: {{due_timestamp.strftime('%Y-%m-%d')}}</div>
+          <div class="{{ 'late' if late_days > 0 else 'ontime' }}">
+            늦은 날짜: {{late_days}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

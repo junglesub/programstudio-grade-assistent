@@ -2,23 +2,11 @@ import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
 os.environ["GIT_SSH_COMMAND"] = f"ssh -i {dir_path}/key/han220 -o IdentitiesOnly=yes"
 
-from subprocess import Popen, PIPE, STDOUT, run
 import csv
-
 import multiprocessing
 
-def run_command(cmd):
-  process = run(cmd, capture_output=True, text=True, check=False, encoding='utf-8', shell=True)
+from runCommand import run_command
 
-  # change to json
-  terminal_markers = '\x1b[2K'
-  lines = [
-    line.strip().strip(terminal_markers)
-    for line in (process.stdout + "\n" + process.stderr).split("\n")
-    if line.strip()
-    ]
-
-  return lines, process.returncode
 
 def gitGetItem(line):
   sid = line[0]
