@@ -1,7 +1,7 @@
 from subprocess import Popen, PIPE, STDOUT, run
 
-def run_command(cmd):
-  process = run(cmd, capture_output=True, text=True, check=False, encoding='utf-8', shell=True)
+def run_command(cmd, timeout=2):
+  process = run(cmd, capture_output=True, text=True, check=False, encoding='utf-8', shell=True, timeout=timeout)
 
   # change to json
   terminal_markers = '\x1b'

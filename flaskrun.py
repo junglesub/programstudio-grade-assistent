@@ -64,7 +64,7 @@ def getStudent(name):
           lines = file.readlines()
           due_timestamp = lines[0].split(" ")[1].strip()
           print(due_timestamp)
-          due_timestamp = datetime.strptime(due_timestamp, "%Y/%m/%d").timestamp() + 86400
+          due_timestamp = datetime.strptime(due_timestamp, "%Y/%m/%d").timestamp() #+ 86400
 
   for root, dirs, files in os.walk(folderDir):
     for file in files:
