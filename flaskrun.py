@@ -91,7 +91,10 @@ def getStudent(name):
      pass
   next_student = student_lines[(nextidx + 1) % len(student_lines)]
   next_student = f"{next_student[0]}_{next_student[1]}"
-  return render_template("student.html", name=name, filesList=filesList, filecontent=filecontent, tc_filename=tc_filename, selfile=selfile, tc_output_st=tc_output_st, timestamp=datetime.fromtimestamp(int(float(timestamp)), timezone(timedelta(hours=9))), due_timestamp=datetime.fromtimestamp(int(float(due_timestamp)), timezone(timedelta(hours=9))), late_days = math.ceil((int(float(timestamp)) - int(float(due_timestamp))) / 86400), next_student=next_student)
+
+  timestamp = int(float(timestamp)) if timestamp != "" else 0
+  due_timestamp = int(float(due_timestamp)) if due_timestamp != "" else 0
+  return render_template("student.html", name=name, filesList=filesList, filecontent=filecontent, tc_filename=tc_filename, selfile=selfile, tc_output_st=tc_output_st, timestamp=datetime.fromtimestamp(timestamp, timezone(timedelta(hours=9))), due_timestamp=datetime.fromtimestamp(due_timestamp, timezone(timedelta(hours=9))), late_days = math.ceil((timestamp - due_timestamp) / 86400), next_student=next_student)
 
 # app.run(host="0.0.0.0", port="4000")
 if __name__ == "__main__":
