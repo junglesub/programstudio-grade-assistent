@@ -47,8 +47,28 @@
     {% endfor %}
   </div>
   <div class="s_right">
+    <a
+      href="https://github.com/{{githublink}}/blob/main/{{selfile}}"
+      target="_blank"
+      rel="noopener noreferrer"
+      >https://github.com/{{githublink}}/blob/main/{{selfile}}</a
+    >
+    {% if selfile.lower().endswith(".md") %}
+    <div id="markdown">Markdown</div>
+    <script defer>
+      const converter = new showdown.Converter(),
+        text = `{{filecontent}}`,
+        html = converter.makeHtml(text);
+      console.log(html);
+      document.getElementById("markdown").innerHTML = html;
+    </script>
+
+    <img
+      src="https://github.com/dnqudgml12/Javapgmstudio/raw/main/src/week5/screenshots%2FJ001.png"
+      alt=""
+    />aaaaaaaa {%else%}
     <pre class="code"><code class="language-c">{{filecontent}}</code></pre>
-    {% for testcase in tc_filename %}
+    {%endif%} {% for testcase in tc_filename %}
     <a
       class="button"
       href="?file={{selfile}}&timestamp={{timestamp.timestamp()}}&tc={{testcase}}"

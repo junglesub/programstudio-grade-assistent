@@ -68,7 +68,7 @@ def getStudent(name):
 
   for root, dirs, files in os.walk(folderDir):
     for file in files:
-        if file.endswith(".c"):
+        if file.lower().endswith(".java") or file.lower().endswith(".md"):
              rootc = root.replace(" ", "\ ")
              filec = file.replace(" ", "\ ")
              filename = os.path.join(rootc, filec)
@@ -94,7 +94,8 @@ def getStudent(name):
 
   timestamp = int(float(timestamp)) if timestamp != "" else 0
   due_timestamp = int(float(due_timestamp)) if due_timestamp != "" else 0
-  return render_template("student.html", name=name, filesList=filesList, filecontent=filecontent, tc_filename=tc_filename, selfile=selfile, tc_output_st=tc_output_st, timestamp=datetime.fromtimestamp(timestamp, timezone(timedelta(hours=9))), due_timestamp=datetime.fromtimestamp(due_timestamp, timezone(timedelta(hours=9))), late_days = math.ceil((timestamp - due_timestamp) / 86400), next_student=next_student)
+  github_split = student_lines[nextidx][2].split("/")[-2:]
+  return render_template("student.html", name=name, filesList=filesList, filecontent=filecontent, tc_filename=tc_filename, selfile=selfile, tc_output_st=tc_output_st, timestamp=datetime.fromtimestamp(timestamp, timezone(timedelta(hours=9))), due_timestamp=datetime.fromtimestamp(due_timestamp, timezone(timedelta(hours=9))), late_days = math.ceil((timestamp - due_timestamp) / 86400), next_student=next_student, student=student_lines[nextidx], githublink = f"{github_split[0]}/{github_split[1].replace('.git', '')}" if len(github_split) > 1 else "")
 
 # app.run(host="0.0.0.0", port="4000")
 if __name__ == "__main__":
