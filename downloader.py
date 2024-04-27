@@ -17,7 +17,7 @@ def gitGetItem(line):
   giturl_sp = giturl.split("/")[-2:]
   if len(giturl_sp) <= 1:
     return
-  pmy, pcode = run_command(f"git clone --depth 1 git@github.com:{giturl_sp[0]}/{giturl_sp[1]}.git {dirName}/{sid}_{name}", 30)
+  pmy, pcode = run_command(f"git clone git@github.com:{giturl_sp[0]}/{giturl_sp[1]}.git {dirName}/{sid}_{name}", 30)
   msg = pmy[0]
   if "Cloning into" in msg and pcode == 0:
     print("\033[92m[cloned]", sid, name, pcode, "\033[0m")
